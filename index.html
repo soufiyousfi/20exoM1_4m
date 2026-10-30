@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلسلة 20 تمريناً تفاعلياً - الرابعة متوسط - الأستاذ يوسفي السوفي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --secondary: #0f766e;
+            --accent: #d97706;
+            --success: #15803d;
+            --success-bg: #dcfce7;
+            --warning: #b45309;
+            --warning-bg: #fef3c7;
+            --danger: #b91c1c;
+            --danger-bg: #fee2e2;
+            --dark: #0f172a;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --border: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg); color: var(--dark); line-height: 1.75; padding-bottom: 70px; }
+
+        /* الترويسة الرسمية */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #0f766e 100%);
+            color: white;
+            padding: 28px 20px;
+            text-align: center;
+            border-bottom: 5px solid #fbbf24;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        header h4 { font-size: 1rem; font-weight: 500; opacity: 0.95; margin-bottom: 4px; }
+        header h2 { font-size: 1.25rem; font-weight: 700; color: #38bdf8; margin-bottom: 8px; }
+        header h1 { font-size: 1.7rem; font-weight: 800; color: #fef08a; margin: 8px 0; }
+        header .prof-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid #fbbf24;
+            padding: 5px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-top: 6px;
+            color: #ffffff;
+        }
+
+        /* شريط النقاط والتبويب */
+        .sticky-top {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 15px;
+        }
+        .sticky-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .score-pill {
+            background: var(--primary);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 1.15rem;
+        }
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tab-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: #334155;
+            transition: all 0.2s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .container { max-width: 960px; margin: 24px auto 0 auto; padding: 0 15px; }
+
+        /* بطاقة التمرين */
+        .ex-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 24px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .ex-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary-light);
+            padding: 10px 16px;
+            border-radius: 10px;
+            border-right: 5px solid var(--primary);
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .ex-card-header h3 { font-size: 1.2rem; color: var(--primary); font-weight: 800; }
+        .cat-tag {
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 15px;
+            background: white;
+            color: var(--secondary);
+            border: 1px solid #99f6e4;
+        }
+
+        .ex-context {
+            background: #f8fafc;
+            border: 1px dashed #94a3b8;
+            padding: 13px 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 1.03rem;
+        }
+
+        .math {
+            direction: ltr;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            background: #e2e8f0;
+            padding: 1px 7px;
+            border-radius: 5px;
+            margin: 0 2px;
+            color: #0f172a;
+        }
+
+        /* كتلة السؤال */
+        .q-block {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 14px;
+            background: #ffffff;
+            transition: all 0.2s;
+        }
+        .q-block.solved { border-color: #86efac; background: #f0fdf4; }
+        .q-block.failed { border-color: #fca5a5; background: #fef2f2; }
+
+        .q-title {
+            font-weight: 800;
+            font-size: 1.04rem;
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .att-badge {
+            font-size: 0.78rem;
+            color: #475569;
+            background: #f1f5f9;
+            padding: 3px 10px;
+            border-radius: 12px;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        input[type="text"], select {
+            padding: 9px 13px;
+            border: 2px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 1rem;
+            font-weight: 700;
+            min-width: 210px;
+            outline: none;
+            direction: ltr;
+            text-align: center;
+        }
+        select { direction: rtl; text-align: right; }
+        input:focus, select:focus { border-color: var(--primary); }
+
+        .sym-btn {
+            background: #e2e8f0;
+            border: 1px solid #cbd5e1;
+            padding: 7px 11px;
+            border-radius: 8px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .sym-btn:hover { background: #cbd5e1; }
+
+        .btn-verify {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 0.96rem;
+            cursor: pointer;
+        }
+        .btn-verify:hover { background: #1d4ed8; }
+        .btn-verify:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        .fb-box {
+            margin-top: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.94rem;
+            display: none;
+        }
+        .fb-box.success { display: block; background: var(--success-bg); color: var(--success); border-right: 4px solid var(--success); }
+        .fb-box.hint { display: block; background: var(--warning-bg); color: var(--warning); border-right: 4px solid var(--warning); }
+        .fb-box.fail { display: block; background: var(--danger-bg); color: var(--danger); border-right: 4px solid var(--danger); }
+
+        .sol-box {
+            margin-top: 12px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-right: 4px solid var(--secondary);
+            padding: 13px;
+            border-radius: 9px;
+            display: none;
+            font-size: 0.95rem;
+        }
+        .sol-box h4 { color: var(--secondary); margin-bottom: 6px; font-size: 1rem; }
+
+        @media (max-width: 600px) {
+            .input-row { flex-direction: column; align-items: stretch; }
+            input[type="text"], select, .btn-verify { width: 100%; }
+            .sticky-inner { flex-direction: column; align-items: stretch; text-align: center; }
+            .filter-tabs { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h4>الجمهورية الجزائرية الديمقراطية الشعبية - وزارة التربية الوطنية</h4>
+        <h2>متوسطة الشهيد محمد العربي بن مهيدي</h2>
+        <h1>سلسلة 20 تمريناً ووضعية إدماجية تفاعلية (الرابعة متوسط)</h1>
+        <div class="prof-badge">إعداد الأستاذ: يوسفي السوفي</div>
+    </header>
+
+    <div class="sticky-top">
+        <div class="sticky-inner">
+            <div>
+                <span style="font-weight:800;">مجموع النقاط: </span>
+                <span class="score-pill" id="globalScore">0 / 100</span>
+            </div>
+            <div class="filter-tabs">
+                <button class="tab-btn active" onclick="filterEx('all', this)">كل السلسلة (20)</button>
+                <button class="tab-btn" onclick="filterEx('book', this)">الكتاب المدرسي (1 - 7)</button>
+                <button class="tab-btn" onclick="filterEx('bem', this)">شهادة التعليم المتوسط BEM (8 - 14)</button>
+                <button class="tab-btn" onclick="filterEx('sit', this)">وضعيات إدماجية مقترحة (15 - 20)</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="exercisesContainer"></div>
+
+    <script>
+        // قاعدة بيانات الـ 20 تمريناً ووضعية إدماجية مضبوطة علمياً مع الوحدات باللاتينية
+        const exercisesData = [
+            // ==================== المحور 1: تمارين الكتاب المدرسي (1 إلى 7) ====================
+            {
+                id: 1, cat: 'book', catName: 'الكتاب المدرسي ص 14',
+                title: 'التمرين 01: القاسم المشترك الأكبر والاختزال',
+                context: 'نعتبر العددين الطبيعيين <span class="math">140</span> و <span class="math">105</span>.',
+                questions: [
+                    {
+                        qId: '1-1', pts: 2,
+                        text: 'السؤال (1): هل العددان <span class="math">105</span> و <span class="math">140</span> أوليان فيما بينهما؟',
+                        type: 'select', options: [{v:'no', t:'لا، ليسا أوليين فيما بينهما'}, {v:'yes', t:'نعم، أوليان فيما بينهما'}],
+                        exact: ['no'], partial: [],
+                        h1: '💡 تلميح 1: انظر إلى رقم آحاد كل منهما (5 و 0)، ألا يقبلان القسمة على عدد مشترك؟',
+                        h2: '💡 تلميح 2: كل عدد رقم آحاده 0 أو 5 يقبل القسمة على 5، إذن لهما قاسم مشترك يختلف عن 1.',
+                        sol: 'العددان <strong>ليسا أوليين فيما بينهما</strong> لأن رقم آحاد 105 هو 5 ورقم آحاد 140 هو 0، فكلاهما يقبل القسمة على 5 (قاسم مشترك أكبر من 1).'
+                    },
+                    {
+                        qId: '1-2', pts: 1.5,
+                        text: 'السؤال (2): احسب <span class="math">PGCD(140 ; 105)</span>.',
+                        type: 'text', sym: [],
+                        exact: ['35'], partial: [],
+                        h1: '💡 تلميح 1: استعمل خوارزمية الفروق المتتالية أو إقليدس: <span class="math">140 - 105 = 35</span>.',
+                        h2: '💡 تلميح 2: بقسمة 140 على 105 نجد الحاصل 1 والباقي 35، وبقسمة 105 على 35 نجد الباقي 0.',
+                        sol: 'باستعمال خوارزمية إقليدس: <span class="math">140 = 105 × 1 + 35</span> ثم <span class="math">105 = 35 × 3 + 0</span>. إذن <span class="math">PGCD(140 ; 105) = 35</span>.'
+                    },
+                    {
+                        qId: '1-3', pts: 1.5,
+                        text: 'السؤال (3): اكتب الكسر <span class="math">105 / 140</span> على شكل كسر غير قابل للاختزال.',
+                        type: 'text', sym: ['/'],
+                        exact: ['3/4'], partial: ['21/28', '15/20'],
+                        partMsg: '⚠️ الكسر الذي كتبته مساوٍ للكسر الأصلي ولكنه غير مختزل لأبسط شكل! اقسم البسط والمقام على 35.',
+                        h1: '💡 تلميح 1: اقسم كلاً من البسط (105) والمقام (140) على <span class="math">PGCD(140 ; 105) = 35</span>.',
+                        h2: '💡 تلميح 2: <span class="math">105 ÷ 35 = 3</span> و <span class="math">140 ÷ 35 = 4</span>. اكتب الكسر على الشكل a/b.',
+                        sol: 'نقسم البسط والمقام على 35: <span class="math">105 / 140 = (105 ÷ 35) / (140 ÷ 35) = 3 / 4</span>.'
+                    }
+                ]
+            },
+            {
+                id: 2, cat: 'book', catName: 'الكتاب المدرسي ص 17',
+                title: 'التمرين 02: خوارزمية إقليدس والاختزال',
+                context: 'نعتبر العددين الطبيعيين <span class="math">768</span> و <span class="math">264</span>.',
+                questions: [
+                    {
+                        qId: '2-1', pts: 2.5,
+                        text: 'السؤال (1): أوجد <span class="math">PGCD(768 ; 264)</span> باستعمال خوارزمية إقليدس.',
+                        type: 'text', sym: [],
+                        exact: ['24'], partial: [],
+                        h1: '💡 تلميح 1: ابدأ بالقسمة الإقليدية: <span class="math">768 = 264 × 2 + 240</span>، ثم اقسم 264 على 240.',
+                        h2: '💡 تلميح 2: <span class="math">264 = 240 × 1 + 24</span> ثم <span class="math">240 = 24 × 10 + 0</span>. آخر باقٍ غير معدوم هو المطلوب.',
+                        sol: 'خطوات إقليدس: <span class="math">768 = 264 × 2 + 240</span> ؛ <span class="math">264 = 240 × 1 + 24</span> ؛ <span class="math">240 = 24 × 10 + 0</span>. إذن <span class="math">PGCD(768 ; 264) = 24</span>.'
+                    },
+                    {
+                        qId: '2-2', pts: 2.5,
+                        text: 'السؤال (2): اختزل الكسر <span class="math">264 / 768</span> إلى كسر غير قابل للاختزال.',
+                        type: 'text', sym: ['/'],
+                        exact: ['11/32'], partial: ['132/384', '66/192', '33/96', '22/64'],
+                        partMsg: '⚠️ كسرك صحيح ولكنه قابل للاختزال أكثر! اقسم البسط والمقام مباشرة على 24.',
+                        h1: '💡 تلميح 1: اقسم البسط 264 والمقام 768 على قاسمهما المشترك الأكبر 24.',
+                        h2: '💡 تلميح 2: <span class="math">264 ÷ 24 = 11</span> و <span class="math">768 ÷ 24 = 32</span>.',
+                        sol: '<span class="math">264 / 768 = (264 ÷ 24) / (768 ÷ 24) = 11 / 32</span>.'
+                    }
+                ]
+            },
+            {
+                id: 3, cat: 'book', catName: 'الكتاب المدرسي ص 34',
+                title: 'التمرين 03: المعادلات من الشكل x² = a',
+                context: 'حل المعادلات الآتية في مجموعة الأعداد الحقيقية:',
+                questions: [
+                    {
+                        qId: '3-1', pts: 2.5,
+                        text: 'السؤال (1): حل المعادلة <span class="math">x² = 49</span> (افصل بين الحلين بفاصلة ;).',
+                        type: 'text', sym: [';'],
+                        exact: ['7;-7', '-7;7'], partial: ['7', '-7'],
+                        partMsg: '⚠️ انتبه! كتبت حلاً واحداً فقط، بينما المعادلة <span class="math">x² = a</span> (مع <span class="math">a > 0</span>) تقبل حلين متعاكسين.',
+                        h1: '💡 تلميح 1: بما أن 49 موجب تماماً، فالمعادلة تقبل حلين متعاكسين هما <span class="math">√49</span> و <span class="math">-√49</span>.',
+                        h2: '💡 تلميح 2: احسب <span class="math">√49 = 7</span> واكتب الحلين الموجب والسالب.',
+                        sol: 'بما أن <span class="math">49 > 0</span> فإن للمعادلة حلين متعاكسين هما: <span class="math">x = √49 = 7</span> و <span class="math">x = -√49 = -7</span>.'
+                    },
+                    {
+                        qId: '3-2', pts: 2.5,
+                        text: 'السؤال (2): حل المعادلة <span class="math">3x² - 15 = 60</span> (افصل بين الحلين بفاصلة ;).',
+                        type: 'text', sym: [';'],
+                        exact: ['5;-5', '-5;5'], partial: ['5', '-5', 'x²=25'],
+                        partMsg: '⚠️ إجابتك ناقصة! لا تنسَ كتابة الحلين المتعاكسين معاً (الموجب والسالب).',
+                        h1: '💡 تلميح 1: انقل -15 إلى الطرف الثاني فتصبح <span class="math">3x² = 60 + 15 = 75</span>، ثم اقسم على 3.',
+                        h2: '💡 تلميح 2: تحصل على <span class="math">x² = 25</span>، ومنه الحلان هما <span class="math">5</span> و <span class="math">-5</span>.',
+                        sol: '<span class="math">3x² = 60 + 15 = 75</span> ومنه <span class="math">x² = 75 / 3 = 25</span>. إذن للمعادلة حلان هما: <span class="math">x = 5</span> و <span class="math">x = -5</span>.'
+                    }
+                ]
+            },
+            {
+                id: 4, cat: 'book', catName: 'الكتاب المدرسي ص 35',
+                title: 'التمرين 04: تبسيط عبارات الجذور التربيعية',
+                context: 'نعتبر العبارتين: <span class="math">A = 3√3 + 4√3 + 5√3</span> و <span class="math">C = √98 + √32 - √8</span>.',
+                questions: [
+                    {
+                        qId: '4-1', pts: 2,
+                        text: 'السؤال (1): بسّط العبارة <span class="math">A</span> واكتبها على الشكل <span class="math">a√3</span>.',
+                        type: 'text', sym: ['√'],
+                        exact: ['12√3', '12'], partial: [],
+                        h1: '💡 تلميح 1: استخرج <span class="math">√3</span> كعامل مشترك واجمع المعاملات: <span class="math">(3 + 4 + 5)√3</span>.',
+                        h2: '💡 تلميح 2: مجموع المعاملات هو 12، اكتب النتيجة بدلالة <span class="math">√3</span>.',
+                        sol: '<span class="math">A = (3 + 4 + 5)√3 = 12√3</span>.'
+                    },
+                    {
+                        qId: '4-2', pts: 3,
+                        text: 'السؤال (2): اكتب العبارة <span class="math">C = √98 + √32 - √8</span> على الشكل <span class="math">a√2</span>.',
+                        type: 'text', sym: ['√'],
+                        exact: ['9√2', '9'], partial: ['7√2+4√2-2√2', '√162'],
+                        partMsg: '⚠️ خطوتك صحيحة ولكن عليك إتمام جمع المعاملات لتبسيط العبارة على الشكل <span class="math">a√2</span>.',
+                        h1: '💡 تلميح 1: فكك الأعداد تحت الجذر إلى جداء في 2: <span class="math">98 = 49×2</span> ، <span class="math">32 = 16×2</span> ، <span class="math">8 = 4×2</span>.',
+                        h2: '💡 تلميح 2: تحصل على <span class="math">7√2 + 4√2 - 2√2</span>. احسب <span class="math">(7 + 4 - 2)√2</span>.',
+                        sol: '<span class="math">C = √(49×2) + √(16×2) - √(4×2) = 7√2 + 4√2 - 2√2 = 9√2</span>.'
+                    }
+                ]
+            },
+            {
+                id: 5, cat: 'book', catName: 'الكتاب المدرسي ص 36',
+                title: 'التمرين 05: المقام الناطق والنشر بالجذور',
+                context: 'ليكن العددان: <span class="math">B = 3 / √5</span> و <span class="math">D = (2√3 - 1)²</span>.',
+                questions: [
+                    {
+                        qId: '5-1', pts: 2.5,
+                        text: 'السؤال (1): اكتب النسبة <span class="math">B = 3 / √5</span> بمقام ناطق.',
+                        type: 'text', sym: ['√', '/'],
+                        exact: ['3√5/5', '(3√5)/5'], partial: [],
+                        h1: '💡 تلميح 1: اضرب كلاً من البسط والمقام في الجذر الموجود في المقام وهو <span class="math">√5</span>.',
+                        h2: '💡 تلميح 2: البسط يصبح <span class="math">3√5</span> والمقام <span class="math">√5 × √5 = 5</span>.',
+                        sol: '<span class="math">B = (3 × √5) / (√5 × √5) = 3√5 / 5</span>.'
+                    },
+                    {
+                        qId: '5-2', pts: 2.5,
+                        text: 'السؤال (2): انشر وبسّط العبارة <span class="math">D = (2√3 - 1)²</span>.',
+                        type: 'text', sym: ['√'],
+                        exact: ['13-4√3', '-4√3+13'], partial: ['12-4√3+1', '12+1-4√3'],
+                        partMsg: '⚠️ نشرك صحيح، لكن اجمع العددين الطبيعيين (12 + 1) لتبسيط النتيجة النهائية!',
+                        h1: '💡 تلميح 1: طبّق المتطابقة الشهيرة الثانية: <span class="math">(a - b)² = a² - 2ab + b²</span> حيث <span class="math">a = 2√3</span> و <span class="math">b = 1</span>.',
+                        h2: '💡 تلميح 2: <span class="math">(2√3)² = 4 × 3 = 12</span> ، والحد الأوسط <span class="math">-2(2√3)(1) = -4√3</span> ، و <span class="math">1² = 1</span>.',
+                        sol: '<span class="math">D = (2√3)² - 2(2√3)(1) + 1² = 12 - 4√3 + 1 = 13 - 4√3</span>.'
+                    }
+                ]
+            },
+            {
+                id: 6, cat: 'book', catName: 'الكتاب المدرسي ص 55',
+                title: 'التمرين 06: النشر والحساب المتمعن فيه بالمتطابقات الشهيرة',
+                context: 'توظيف المتطابقات الشهيرة في النشر والحساب الذهني السريع:',
+                questions: [
+                    {
+                        qId: '6-1', pts: 2.5,
+                        text: 'السؤال (1): انشر وبسّط الجداء <span class="math">(2x + 4)(2x - 4)</span>.',
+                        type: 'text', sym: ['x²'],
+                        exact: ['4x²-16', '4x^2-16'], partial: ['(2x)²-4²', '4x²-8x+8x-16'],
+                        partMsg: '⚠️ خطوتك صحيحة ولكن عليك تبسيط الكتابة النهائية إلى <span class="math">4x² - 16</span>.',
+                        h1: '💡 تلميح 1: هذه متطابقة شهيرة ثالثة من الشكل <span class="math">(a + b)(a - b) = a² - b²</span>.',
+                        h2: '💡 تلميح 2: ربع الحد الأول <span class="math">(2x)² = 4x²</span> واطرح منه مربع الحد الثاني <span class="math">4² = 16</span>.',
+                        sol: '<span class="math">(2x + 4)(2x - 4) = (2x)² - 4² = 4x² - 16</span>.'
+                    },
+                    {
+                        qId: '6-2', pts: 2.5,
+                        text: 'السؤال (2): احسب بتمعن الجداء <span class="math">101 × 99</span> بتوظيف متطابقة شهيرة.',
+                        type: 'text', sym: [],
+                        exact: ['9999'], partial: ['10000-1', '100²-1²'],
+                        partMsg: '⚠️ ممتاز، طبقت المتطابقة <span class="math">10000 - 1</span> بشكل سليم، اكتب الناتج النهائي الآن!',
+                        h1: '💡 تلميح 1: اكتب <span class="math">101 = 100 + 1</span> و <span class="math">99 = 100 - 1</span> ثم طبق <span class="math">(100+1)(100-1)</span>.',
+                        h2: '💡 تلميح 2: <span class="math">100² - 1² = 10000 - 1</span>.',
+                        sol: '<span class="math">101 × 99 = (100 + 1)(100 - 1) = 100² - 1² = 10000 - 1 = 9999</span>.'
+                    }
+                ]
+            },
+            {
+                id: 7, cat: 'book', catName: 'الكتاب المدرسي ص 70',
+                title: 'التمرين 07: ترييض مشكلة بمعادلة (المربع والمستطيل)',
+                context: 'نعتبر مربعاً طول ضلعه <span class="math">x</span> (بوحدة <span class="math">cm</span>). إذا زدنا في طول ضلع هذا المربع بـ <span class="math">5 cm</span> ونقصنا من الضلع الآخر بـ <span class="math">3 cm</span>، نتحصل على مستطيل له نفس مساحة المربع الأصلي.',
+                questions: [
+                    {
+                        qId: '7-1', pts: 5,
+                        text: 'السؤال: أوجد قيمة طول ضلع المربع <span class="math">x</span> (بـ <span class="math">cm</span>) بحل المعادلة <span class="math">(x - 3)(x + 5) = x²</span>.',
+                        type: 'text', sym: ['/'],
+                        exact: ['7.5', '7,5', '7.5cm'], partial: ['15/2'],
+                        partMsg: '⚠️ الكسر <span class="math">15/2</span> صحيح، اكتب قيمته العشرية المضبوطة بـ <span class="math">cm</span>.',
+                        h1: '💡 تلميح 1: انشر الطرف الأول: <span class="math">(x - 3)(x + 5) = x² + 5x - 3x - 15 = x² + 2x - 15</span>.',
+                        h2: '💡 تلميح 2: باختزال <span class="math">x²</span> من الطرفين نجد <span class="math">2x - 15 = 0</span> أي <span class="math">2x = 15</span>.',
+                        sol: 'ننشر المعادلة: <span class="math">x² + 5x - 3x - 15 = x²</span> ومنه <span class="math">2x - 15 = 0</span> أي <span class="math">2x = 15</span>، إذن <span class="math">x = 15 / 2 = 7.5 cm</span>.'
+                    }
+                ]
+            },
+
+            // ==================== المحور 2: تمارين شهادة التعليم المتوسط BEM (8 إلى 14) ====================
+            {
+                id: 8, cat: 'bem', catName: 'شهادة التعليم المتوسط - دورة جوان 2018',
+                title: 'التمرين 08: العمليات على الكسور والكتابة العلمية (BEM 2018)',
+                context: 'ليكن العددان: <span class="math">A = 3/5 + (2/5) × (7/4)</span> و <span class="math">B = (1.2 × 10⁻² × 7) / (15 × 10⁻³)</span>.',
+                questions: [
+                    {
+                        qId: '8-1', pts: 2.5,
+                        text: 'السؤال (1): احسب <span class="math">A</span> واكتب الناتج على شكل كسر غير قابل للاختزال.',
+                        type: 'text', sym: ['/'],
+                        exact: ['13/10'], partial: ['26/20'],
+                        partMsg: '⚠️ حسابك صحيح (<span class="math">26/20</span>)، لكنه يحتاج إلى اختزال بالقسمة على 2!',
+                        h1: '💡 تلميح 1: الأولوية للضرب: احسب <span class="math">(2/5) × (7/4) = 14/20 = 7/10</span> أولاً.',
+                        h2: '💡 تلميح 2: وحّد المقامات في <span class="math">3/5 + 7/10 = 6/10 + 7/10</span>.',
+                        sol: 'الأولوية للضرب: <span class="math">A = 3/5 + 14/20 = 3/5 + 7/10 = 6/10 + 7/10 = 13/10</span> (كسر غير قابل للاختزال).'
+                    },
+                    {
+                        qId: '8-2', pts: 2.5,
+                        text: 'السؤال (2): أعطِ الكتابة العلمية للعدد <span class="math">B</span>.',
+                        type: 'text', sym: ['×10^'],
+                        exact: ['5.6×10^0', '5.6*10^0', '5.6', '5,6'], partial: ['0.56×10^1', '56×10^-1'],
+                        partMsg: '⚠️ القيمة صحيحة ولكن في الكتابة العلمية يجب أن يكون العدد العشري محصوراً بين 1 و 10 (أي 5.6).',
+                        h1: '💡 تلميح 1: اضرب الأعداد معاً وقسم على 15: <span class="math">(1.2 × 7) / 15 = 8.4 / 15 = 0.56</span>.',
+                        h2: '💡 تلميح 2: طبق قواعد قوى 10: <span class="math">10⁻² / 10⁻³ = 10¹</span>، فتجد <span class="math">0.56 × 10¹ = 5.6 × 10⁰</span>.',
+                        sol: '<span class="math">B = ((1.2 × 7) / 15) × (10⁻² / 10⁻³) = 0.56 × 10¹ = 5.6 = 5.6 × 10⁰</span>.'
+                    }
+                ]
+            },
+            {
+                id: 9, cat: 'bem', catName: 'شهادة التعليم المتوسط - دورة جوان 2020',
+                title: 'التمرين 09: الجذور التربيعية وتبسيط النسب (BEM 2020)',
+                context: 'ليكن العددان: <span class="math">A = 3√8 × √2</span> و <span class="math">B = 2√27 - 2√3 + √12</span>.',
+                questions: [
+                    {
+                        qId: '9-1', pts: 2.5,
+                        text: 'السؤال (1): بيّن أن <span class="math">A</span> عدد طبيعي (احسب قيمته).',
+                        type: 'text', sym: [],
+                        exact: ['12'], partial: ['3√16', '3×4', '3*4'],
+                        partMsg: '⚠️ خطوتك صحيحة (<span class="math">3√16 = 3×4</span>)، أكمل الضرب للحصول على العدد الطبيعي!',
+                        h1: '💡 تلميح 1: استعمل خاصية جداء جذرين: <span class="math">√8 × √2 = √(8 × 2) = √16</span>.',
+                        h2: '💡 تلميح 2: بما أن <span class="math">√16 = 4</span>، احسب <span class="math">3 × 4</span>.',
+                        sol: '<span class="math">A = 3√(8 × 2) = 3√16 = 3 × 4 = 12</span> وهو عدد طبيعي.'
+                    },
+                    {
+                        qId: '9-2', pts: 2.5,
+                        text: 'السؤال (2): اكتب العدد <span class="math">B</span> على الشكل <span class="math">a√3</span> حيث <span class="math">a</span> عدد طبيعي.',
+                        type: 'text', sym: ['√'],
+                        exact: ['6√3', '6'], partial: ['6√3-2√3+2√3'],
+                        partMsg: '⚠️ تفكيكك للجذور سليم، اجمع المعاملات الآن!',
+                        h1: '💡 تلميح 1: فكك <span class="math">√27 = √(9×3) = 3√3</span> و <span class="math">√12 = √(4×3) = 2√3</span>.',
+                        h2: '💡 تلميح 2: عوض في B: <span class="math">B = 2(3√3) - 2√3 + 2√3 = (6 - 2 + 2)√3</span>.',
+                        sol: '<span class="math">B = 2√(9×3) - 2√3 + √(4×3) = 6√3 - 2√3 + 2√3 = 6√3</span>.'
+                    }
+                ]
+            },
+            {
+                id: 10, cat: 'bem', catName: 'شهادة التعليم المتوسط (مدمج في الكتاب ص 14)',
+                title: 'التمرين 10: مسألة الصفيحة الزجاجية والـ PGCD (BEM)',
+                context: 'صفيحة زجاجية مستطيلة الشكل بُعداها <span class="math">1.40 m</span> و <span class="math">2.20 m</span>، قُسّمت إلى مربعات متساوية بأكبر ضلع ممكن دون ضياع.',
+                questions: [
+                    {
+                        qId: '10-1', pts: 2.5,
+                        text: 'السؤال (1): ما هو طول ضلع كل مربع بالسنتيمتر (<span class="math">cm</span>)؟',
+                        type: 'text', sym: [],
+                        exact: ['20', '20cm'], partial: ['0.2', '0,2', '0.2m'],
+                        partMsg: '⚠️ إجابتك بالمتر (0.2 m) صحيحة، لكن السؤال طلب الطول بوحدة <span class="math">cm</span>!',
+                        h1: '💡 تلميح 1: حوّل البعدين إلى <span class="math">cm</span>: <span class="math">220 cm</span> و <span class="math">140 cm</span>، ثم احسب <span class="math">PGCD(220 ; 140)</span>.',
+                        h2: '💡 تلميح 2: <span class="math">220 = 140 × 1 + 80</span> ؛ <span class="math">140 = 80 × 1 + 60</span> ؛ <span class="math">80 = 60 × 1 + 20</span> ؛ <span class="math">60 = 20 × 3 + 0</span>.',
+                        sol: 'نحول إلى السنتمتر: <span class="math">220 cm</span> و <span class="math">140 cm</span>. طول ضلع المربع هو <span class="math">PGCD(220 ; 140) = 20 cm</span>.'
+                    },
+                    {
+                        qId: '10-2', pts: 2.5,
+                        text: 'السؤال (2): ما هو عدد المربعات الزجاجية الناتجة؟',
+                        type: 'text', sym: [],
+                        exact: ['77'], partial: ['11×7', '11*7'],
+                        partMsg: '⚠️ العملية (11 × 7) صحيحة، احسب الناتج النهائي الآن!',
+                        h1: '💡 تلميح 1: اقسم الطول 220 على 20، واقسم العرض 140 على 20، ثم اضرب الناتجين.',
+                        h2: '💡 تلميح 2: عدد المربعات على الطول <span class="math">220 ÷ 20 = 11</span> وعلى العرض <span class="math">140 ÷ 20 = 7</span>. اضرب 11 في 7.',
+                        sol: 'عدد المربعات هو: <span class="math">(220 ÷ 20) × (140 ÷ 20) = 11 × 7 = 77</span> مربعاً.'
+                    }
+                ]
+            },
+            {
+                id: 11, cat: 'bem', catName: 'من مواضيع شهادة التعليم المتوسط BEM',
+                title: 'التمرين 11: النشر، التحليل، ومعادلة الجداء المعدوم (BEM)',
+                context: 'لتكن العبارة الجبرية: <span class="math">E = (4x - 1)² - (3x + 2)(4x - 1)</span>.',
+                questions: [
+                    {
+                        qId: '11-1', pts: 2.5,
+                        text: 'السؤال (1): انشر وبسّط العبارة <span class="math">E</span>.',
+                        type: 'text', sym: ['x²'],
+                        exact: ['4x²-13x+3', '4x^2-13x+3'], partial: ['16x²-8x+1-12x²-5x+2'],
+                        partMsg: '⚠️ النشر سليم، اجمع الحدود المتشابهة لتبسيط العبارة!',
+                        h1: '💡 تلميح 1: انشر <span class="math">(4x - 1)² = 16x² - 8x + 1</span> وانشر <span class="math">(3x + 2)(4x - 1) = 12x² + 5x - 2</span>.',
+                        h2: '💡 تلميح 2: انتبه للإشارة السالبة قبل القوس الثاني: <span class="math">(16x² - 8x + 1) - (12x² + 5x - 2)</span>.',
+                        sol: '<span class="math">E = (16x² - 8x + 1) - (12x² - 3x + 8x - 2) = 16x² - 8x + 1 - 12x² - 5x + 2 = 4x² - 13x + 3</span>.'
+                    },
+                    {
+                        qId: '11-2', pts: 2.5,
+                        text: 'السؤال (2): حل المعادلة <span class="math">(4x - 1)(x - 3) = 0</span> (افصل بين الحلين بفاصلة ;).',
+                        type: 'text', sym: ['/', ';'],
+                        exact: ['3;1/4', '1/4;3', '3;0.25', '0.25;3'], partial: ['3', '1/4', '0.25'],
+                        partMsg: '⚠️ كتبت حلاً واحداً فقط! معادلة الجداء المعدوم هنا تقبل حلين.',
+                        h1: '💡 تلميح 1: جداء عاملين يساوي الصفر يعني إما <span class="math">4x - 1 = 0</span> أو <span class="math">x - 3 = 0</span>.',
+                        h2: '💡 تلميح 2: من المعادلة الأولى <span class="math">x = 1/4</span> ومن الثانية <span class="math">x = 3</span>.',
+                        sol: 'إما <span class="math">4x - 1 = 0 ⇒ x = 1/4</span> (أو 0.25)، وإما <span class="math">x - 3 = 0 ⇒ x = 3</span>. للمعادلة حلان هما <span class="math">1/4</span> و <span class="math">3</span>.'
+                    }
+                ]
+            },
+            {
+                id: 12, cat: 'bem', catName: 'من مواضيع شهادة التعليم المتوسط BEM',
+                title: 'التمرين 12: حل المتراجحات من الدرجة الأولى (BEM)',
+                context: 'نعتبر المتراجحة: <span class="math">2(1 + 2x) - 5(1 - x) ≤ x + 13</span>.',
+                questions: [
+                    {
+                        qId: '12-1', pts: 3,
+                        text: 'السؤال (1): حل المتراجحة وأوجد شرط قيم <span class="math">x</span> (اكتب على الشكل <span class="math">x<=a</span>).',
+                        type: 'text', sym: ['<='],
+                        exact: ['x<=2', 'x≤2', '2'], partial: ['8x<=16', '8x≤16'],
+                        partMsg: '⚠️ خطوتك (<span class="math">8x ≤ 16</span>) صحيحة، اقسم الطرفين على 8 لإيجاد <span class="math">x</span>!',
+                        h1: '💡 تلميح 1: انشر الطرف الأيسر: <span class="math">2 + 4x - 5 + 5x ≤ x + 13</span> أي <span class="math">9x - 3 ≤ x + 13</span>.',
+                        h2: '💡 تلميح 2: اجعل المجاهيل في طرف والمعاليم في طرف: <span class="math">9x - x ≤ 13 + 3</span> أي <span class="math">8x ≤ 16</span>.',
+                        sol: 'ننشر ونبسط: <span class="math">2 + 4x - 5 + 5x ≤ x + 13 ⇒ 9x - 3 ≤ x + 13 ⇒ 8x ≤ 16 ⇒ x ≤ 2</span>. حلول المتراجحة هي كل القيم الأصغر من أو تساوي 2.'
+                    },
+                    {
+                        qId: '12-2', pts: 2,
+                        text: 'السؤال (2): هل العدد <span class="math">9/4</span> حل لهذه المتراجحة؟',
+                        type: 'select', options: [{v:'no', t:'لا، ليس حلاً للمتراجحة'}, {v:'yes', t:'نعم، هو حل للمتراجحة'}],
+                        exact: ['no'], partial: [],
+                        h1: '💡 تلميح 1: احسب قيمة <span class="math">9/4</span> بالفاصلة وقارنها بالعدد 2.',
+                        h2: '💡 تلميح 2: <span class="math">9/4 = 2.25</span>، وبما أن <span class="math">2.25 > 2</span> فهل يحقق الشرط <span class="math">x ≤ 2</span>؟',
+                        sol: 'لدينا <span class="math">9/4 = 2.25</span>، وبما أن <span class="math">2.25 > 2</span> فإن العدد <span class="math">9/4</span> <strong>ليس حلاً</strong> للمتراجحة.'
+                    }
+                ]
+            },
+            {
+                id: 13, cat: 'bem', catName: 'من مواضيع شهادة التعليم المتوسط BEM',
+                title: 'التمرين 13: خاصية طالس وحساب الأطوال الهندسية (BEM)',
+                context: 'في الشكل الهندسي المقابل للمتزحلق: المستقيمان <span class="math">(BD)</span> و <span class="math">(AE)</span> متوازيان، والمستقيمان <span class="math">(AB)</span> و <span class="math">(DE)</span> يتقاطعان في النقطة <span class="math">C</span>.<br>المعطيات: <span class="math">CA = 1200 m</span> ، <span class="math">BD = 150 m</span> ، <span class="math">AE = 200 m</span>.',
+                questions: [
+                    {
+                        qId: '13-1', pts: 5,
+                        text: 'السؤال: بتطبيق خاصية طالس، احسب المسافة المتبقية للمتزحلق <span class="math">CB</span> (بوحدة <span class="math">m</span>).',
+                        type: 'text', sym: [],
+                        exact: ['900', '900m'], partial: ['180000/200'],
+                        partMsg: '⚠️ الكسر صحيح، أكمل عملية القسمة لإيجاد المسافة بالمتر!',
+                        h1: '💡 تلميح 1: بما أن <span class="math">(BD) // (AE)</span>، فحسب طالس: <span class="math">CB / CA = CD / CE = BD / AE</span>.',
+                        h2: '💡 تلميح 2: عوض بالأعداد: <span class="math">CB / 1200 = 150 / 200</span>، ثم احسب الرابع المتناسب.',
+                        sol: 'بما أن <span class="math">(BD) // (AE)</span> فحسب خاصية طالس: <span class="math">CB / CA = BD / AE</span> أي <span class="math">CB / 1200 = 150 / 200</span> ومنه <span class="math">CB = (1200 × 150) / 200 = 900 m</span>.'
+                    }
+                ]
+            },
+            {
+                id: 14, cat: 'bem', catName: 'من مواضيع شهادة التعليم المتوسط BEM',
+                title: 'التمرين 14: الهندسة التحليلية والأشعة في المعلم (BEM)',
+                context: 'في معلم متعامد ومتجانس للمستوي (وحدة الطول هي <span class="math">cm</span>)، نعتبر النقطتين <span class="math">A(-1 ; 3)</span> و <span class="math">B(4 ; 3)</span>، والنقطتين <span class="math">C(-3 ; -3)</span> و <span class="math">D(5 ; -5)</span>.',
+                questions: [
+                    {
+                        qId: '14-1', pts: 2.5,
+                        text: 'السؤال (1): احسب مركبتي الشعاع <span class="math">AB</span> (اكتبها على الشكل <span class="math">x;y</span>).',
+                        type: 'text', sym: [';'],
+                        exact: ['5;0', '(5;0)'], partial: [],
+                        h1: '💡 تلميح 1: مركبتا الشعاع <span class="math">AB</span> هما <span class="math">(xB - xA ; yB - yA)</span>.',
+                        h2: '💡 تلميح 2: احسب <span class="math">4 - (-1) = 5</span> و <span class="math">3 - 3 = 0</span>.',
+                        sol: '<span class="math">xB - xA = 4 - (-1) = 5</span> و <span class="math">yB - yA = 3 - 3 = 0</span>. إذن مركبتا الشعاع هما <span class="math">AB(5 ; 0)</span>.'
+                    },
+                    {
+                        qId: '14-2', pts: 2.5,
+                        text: 'السؤال (2): احسب مركبتي الشعاع <span class="math">CD</span> (اكتبها على الشكل <span class="math">x;y</span>).',
+                        type: 'text', sym: [';'],
+                        exact: ['8;-2', '(8;-2)', '+8;-2'], partial: [],
+                        h1: '💡 تلميح 1: احسب الفاصلة <span class="math">xD - xC = 5 - (-3)</span> والترتيب <span class="math">yD - yC = -5 - (-3)</span>.',
+                        h2: '💡 تلميح 2: <span class="math">5 + 3 = 8</span> و <span class="math">-5 + 3 = -2</span>.',
+                        sol: '<span class="math">xD - xC = 5 - (-3) = 8</span> و <span class="math">yD - yC = -5 - (-3) = -2</span>. إذن <span class="math">CD(8 ; -2)</span>.'
+                    }
+                ]
+            },
+
+            // ==================== المحور 3: وضعيات إدماجية مقترحة (15 إلى 20) ====================
+            {
+                id: 15, cat: 'sit', catName: 'وضعية إدماجية مقترحة 01',
+                title: 'التمرين 15 (وضعية): الجمعية الخيرية وتوزيع المحافظ المدرسية',
+                context: 'بمناسبة الدخول المدرسي، اقتنت جمعية خيرية <span class="math">252</span> كراساً و <span class="math">140</span> كتاباً لتوزيعها على أكبر عدد ممكن من التلاميذ المعوزين في شكل محافظ متماثلة دون أن يتبقى أي كراس أو كتاب.<br>إذا علمت أن ثمن الكراس الواحد <span class="math">65 DA</span>، وثمن الكتاب الواحد <span class="math">220 DA</span>، وثمن المحفظة الفارغة <span class="math">850 DA</span>.',
+                questions: [
+                    {
+                        qId: '15-1', pts: 2,
+                        text: 'السؤال (1): ما هو أكبر عدد من التلاميذ المستفيدين؟',
+                        type: 'text', sym: [],
+                        exact: ['28'], partial: [],
+                        h1: '💡 تلميح 1: أكبر عدد من التلاميذ يمثل القاسم المشترك الأكبر <span class="math">PGCD(252 ; 140)</span>.',
+                        h2: '💡 تلميح 2: بطرح أو قسمة إقليدس: <span class="math">252 = 140×1 + 112</span> ؛ <span class="math">140 = 112×1 + 28</span> ؛ <span class="math">112 = 28×4 + 0</span>.',
+                        sol: 'نحسب <span class="math">PGCD(252 ; 140) = 28</span>. إذن أكبر عدد من التلاميذ المستفيدين هو <strong>28 تلميذاً</strong>.'
+                    },
+                    {
+                        qId: '15-2', pts: 1.5,
+                        text: 'السؤال (2): ما هو عدد الكراريس وعدد الكتب في كل محفظة؟ (اكتب: كراريس;كتب).',
+                        type: 'text', sym: [';'],
+                        exact: ['9;5'], partial: ['5;9'],
+                        partMsg: '⚠️ انتبه للترتيب: ابدأ بعدد الكراريس (252÷28) ثم عدد الكتب (140÷28)!',
+                        h1: '💡 تلميح 1: اقسم عدد الكراريس (252) على 28، واقسم عدد الكتب (140) على 28.',
+                        h2: '💡 تلميح 2: <span class="math">252 ÷ 28 = 9</span> كراريس، و <span class="math">140 ÷ 28 = 5</span> كتب. اكتب <span class="math">9;5</span>.',
+                        sol: 'في كل محفظة: <span class="math">252 ÷ 28 = 9</span> كراريس، و <span class="math">140 ÷ 28 = 5</span> كتب.'
+                    },
+                    {
+                        qId: '15-3', pts: 1.5,
+                        text: 'السؤال (3): احسب تكلفة تجهيز المحفظة الواحدة (بوحدة <span class="math">DA</span>).',
+                        type: 'text', sym: [],
+                        exact: ['2535', '2535DA'], partial: ['1685'],
+                        partMsg: '⚠️ لقد حسبت ثمن الكراريس والكتب (1685 DA) ونسيت إضافة ثمن المحفظة الفارغة (850 DA)!',
+                        h1: '💡 تلميح 1: تكلفة المحفظة = (9 كراريس × 65 DA) + (5 كتب × 220 DA) + ثمن المحفظة الفارغة (850 DA).',
+                        h2: '💡 تلميح 2: احسب <span class="math">585 + 1100 + 850</span>.',
+                        sol: 'تكلفة المحفظة الواحدة: <span class="math">(9 × 65) + (5 × 220) + 850 = 585 + 1100 + 850 = 2535 DA</span>.'
+                    }
+                ]
+            },
+            {
+                id: 16, cat: 'sit', catName: 'وضعية إدماجية مقترحة 02',
+                title: 'التمرين 16 (وضعية): حساب الجذور، المساحات، وغرس الأشجار',
+                context: 'يملك فلاح قطعة أرض مستطيلة الشكل طولها <span class="math">L = √180 + √20</span> (بـ <span class="math">m</span>) وعرضها <span class="math">l = √80</span> (بـ <span class="math">m</span>).<br>أراد غرس أشجار زيتون على كامل محيطها بحيث تفصل بين كل شجرتين متتاليتين مسافة <span class="math">√5 m</span>، مع غرس شجرة في كل ركن. كما خصص جزءاً مساحته <span class="math">S1 = 60 m²</span> لزراعة القمح والباقي <span class="math">S2</span> لتربية الدواجن.',
+                questions: [
+                    {
+                        qId: '16-1', pts: 2,
+                        text: 'السؤال (1): اكتب الطول <span class="math">L</span> والعرض <span class="math">l</span> على الشكل <span class="math">a√5</span> (اكتب: الطول;العرض).',
+                        type: 'text', sym: ['√', ';'],
+                        exact: ['8√5;4√5', '8;4'], partial: ['6√5+2√5;4√5'],
+                        partMsg: '⚠️ بسط الطول بجمع <span class="math">6√5 + 2√5 = 8√5</span>!',
+                        h1: '💡 تلميح 1: <span class="math">√180 = √(36×5) = 6√5</span> و <span class="math">√20 = 2√5</span>، أما العرض <span class="math">√80 = √(16×5) = 4√5</span>.',
+                        h2: '💡 تلميح 2: الطول <span class="math">L = 8√5</span> والعرض <span class="math">l = 4√5</span>. اكتب <span class="math">8√5;4√5</span>.',
+                        sol: '<span class="math">L = 6√5 + 2√5 = 8√5 m</span> ، والعرض <span class="math">l = √(16×5) = 4√5 m</span>.'
+                    },
+                    {
+                        qId: '16-2', pts: 1.5,
+                        text: 'السؤال (2): ما هو عدد أشجار الزيتون اللازمة لإحاطة الأرض؟',
+                        type: 'text', sym: [],
+                        exact: ['24'], partial: ['24√5'],
+                        partMsg: '⚠️ <span class="math">24√5 m</span> هو المحيط، اقسمه الآن على المسافة بين شجرتين (<span class="math">√5</span>) لإيجاد عدد الأشجار!',
+                        h1: '💡 تلميح 1: احسب محيط المستطيل أولاً: <span class="math">P = 2 × (8√5 + 4√5) = 24√5 m</span>.',
+                        h2: '💡 تلميح 2: عدد الأشجار على محيط مغلق = المحيط ÷ المسافة بين شجرتين = <span class="math">24√5 ÷ √5</span>.',
+                        sol: 'المحيط <span class="math">P = 2(8√5 + 4√5) = 24√5 m</span>. عدد الأشجار هو: <span class="math">24√5 ÷ √5 = 24</span> شجرة.'
+                    },
+                    {
+                        qId: '16-3', pts: 1.5,
+                        text: 'السؤال (3): احسب المساحة المتبقية <span class="math">S2</span> المخصصة لتربية الدواجن (بـ <span class="math">m²</span>).',
+                        type: 'text', sym: [],
+                        exact: ['100', '100m²', '100m2'], partial: ['160'],
+                        partMsg: '⚠️ <span class="math">160 m²</span> هي المساحة الكلية للأرض، اطرح منها مساحة القمح (<span class="math">60 m²</span>)!',
+                        h1: '💡 تلميح 1: احسب المساحة الكلية للمستطيل: <span class="math">S = L × l = 8√5 × 4√5 = 32 × 5 = 160 m²</span>.',
+                        h2: '💡 تلميح 2: اطرح مساحة القمح من المساحة الكلية: <span class="math">S2 = 160 - 60</span>.',
+                        sol: 'المساحة الكلية <span class="math">S = 8√5 × 4√5 = 160 m²</span>. المساحة المتبقية للدواجن: <span class="math">S2 = 160 - 60 = 100 m²</span>.'
+                    }
+                ]
+            },
+            {
+                id: 17, cat: 'sit', catName: 'وضعية إدماجية مقترحة 03',
+                title: 'التمرين 17 (وضعية): تكلفة التبليط وعدد علب البلاط',
+                context: 'يُباع البلاط المخصص لتغطية القاعة السابقة (التي تحتاج إلى <span class="math">77</span> بلاطة) في علب، تحتوي كل علبة على <span class="math">8</span> بلاطات، وثمن العلبة الواحدة <span class="math">1200 DA</span>، ويتقاضى الحرفي مبلغ <span class="math">4500 DA</span> كأجرة لليد العاملة.',
+                questions: [
+                    {
+                        qId: '17-1', pts: 2.5,
+                        text: 'السؤال (1): كم علبة بلاط كاملة يجب شراؤها لتغطية القاعة؟',
+                        type: 'text', sym: [],
+                        exact: ['10'], partial: ['9.625', '9,625'],
+                        partMsg: '⚠️ حاصل القسمة هو 9.625، ولكن لا يمكن شراء جزء من علبة! قرّب إلى العدد الطبيعي الأكبر مباشرة.',
+                        h1: '💡 تلميح 1: اقسم عدد البلاطات اللازمة (77) على عدد البلاطات في العلبة الواحدة (8).',
+                        h2: '💡 تلميح 2: <span class="math">77 ÷ 8 = 9.625</span>، إذن 9 علب لا تكفي، فكم علبة يجب شراؤها؟',
+                        sol: '<span class="math">77 ÷ 8 = 9.625</span>، ومنه يجب شراء <strong>10 علب بلاط</strong>.'
+                    },
+                    {
+                        qId: '17-2', pts: 2.5,
+                        text: 'السؤال (2): احسب التكلفة الإجمالية لتبليط هذه القاعة (بـ <span class="math">DA</span>).',
+                        type: 'text', sym: [],
+                        exact: ['16500', '16500DA'], partial: ['12000'],
+                        partMsg: '⚠️ 12000 DA هو ثمن علب البلاط فقط، لا تنسَ إضافة أجرة الحرفي (4500 DA)!',
+                        h1: '💡 تلميح 1: ثمن البلاط = <span class="math">10 × 1200 = 12000 DA</span>.',
+                        h2: '💡 تلميح 2: اجمع ثمن البلاط مع أجرة اليد العاملة: <span class="math">12000 + 4500</span>.',
+                        sol: 'ثمن البلاط: <span class="math">10 × 1200 = 12000 DA</span>. التكلفة الإجمالية: <span class="math">12000 + 4500 = 16500 DA</span>.'
+                    }
+                ]
+            },
+            {
+                id: 18, cat: 'sit', catName: 'وضعية إدماجية مقترحة 04 (الكتاب ص 75)',
+                title: 'التمرين 18 (وضعية): المقارنة بين عرضين بالمتراجحات والدوال',
+                context: 'يعمل صهيب وزكريا في مؤسسة؛ يتقاضى صهيب راتباً شهرياً ثابتاً قدره <span class="math">18000 DA</span> بالإضافة إلى <span class="math">4500 DA</span> عن كل بعثة عمل، بينما يتقاضى زكريا راتباً ثابتاً قدره <span class="math">20000 DA</span> بالإضافة إلى <span class="math">3000 DA</span> عن كل بعثة عمل. نسمي <span class="math">x</span> عدد البعثات في الشهر.',
+                questions: [
+                    {
+                        qId: '18-1', pts: 2.5,
+                        text: 'السؤال (1): احسب دخل كل من صهيب وزكريا (بـ <span class="math">DA</span>) إذا قام كل منهما ببعثتين (<span class="math">x = 2</span>) في الشهر (اكتب: صهيب;زكريا).',
+                        type: 'text', sym: [';'],
+                        exact: ['27000;26000'], partial: ['26000;27000'],
+                        partMsg: '⚠️ انتبه للترتيب: اكتب دخل صهيب أولاً ثم دخل زكريا!',
+                        h1: '💡 تلميح 1: دخل صهيب = <span class="math">18000 + 4500 × 2</span> ، ودخل زكريا = <span class="math">20000 + 3000 × 2</span>.',
+                        h2: '💡 تلميح 2: صهيب يتقاضى <span class="math">27000 DA</span> وزكريا <span class="math">26000 DA</span>. اكتب <span class="math">27000;26000</span>.',
+                        sol: 'من أجل بعثتين: دخل صهيب <span class="math">18000 + 4500 × 2 = 27000 DA</span>، ودخل زكريا <span class="math">20000 + 3000 × 2 = 26000 DA</span>.'
+                    },
+                    {
+                        qId: '18-2', pts: 2.5,
+                        text: 'السؤال (2): ابتداءً من كم بعثة في الشهر يصبح دخل صهيب أفضل (أكبر تماماً) من دخل زكريا؟',
+                        type: 'text', sym: [],
+                        exact: ['2', 'بعثتين'], partial: ['4/3', '1.33'],
+                        partMsg: '⚠️ حل المتراجحة <span class="math">x > 4/3 ≈ 1.33</span> صحيح، وبما أن عدد البعثات عدد طبيعي فما هو أصغر عدد طبيعي أكبر من 1.33؟',
+                        h1: '💡 تلميح 1: حل المتراجحة <span class="math">18000 + 4500x > 20000 + 3000x</span>.',
+                        h2: '💡 تلميح 2: <span class="math">1500x > 2000 ⇒ x > 2000/1500 ≈ 1.33</span>، إذن ابتداءً من البعثة رقم 2.',
+                        sol: 'نحل المتراجحة: <span class="math">4500x - 3000x > 20000 - 18000 ⇒ 1500x > 2000 ⇒ x > 1.33</span>. وبما أن <span class="math">x</span> عدد طبيعي، فإن دخل صهيب يكون أفضل ابتداءً من <strong>بعثتين (2)</strong>.'
+                    }
+                ]
+            },
+            {
+                id: 19, cat: 'sit', catName: 'وضعية إدماجية مقترحة 05 (الكتاب ص 92)',
+                title: 'التمرين 19 (وضعية): الدالة الخطية والنسب المئوية للتخفيض والزيادة',
+                context: 'سعر جهاز إعلام آلي هو <span class="math">80000 DA</span>. خضع هذا السعر أولاً لتخفيض قدره <span class="math">8%</span>، ثم خضع السعر الجديد لزيادة قدرها <span class="math">8%</span>.',
+                questions: [
+                    {
+                        qId: '19-1', pts: 2,
+                        text: 'السؤال (1): هل يبقى السعر النهائي للجهاز ثابتاً (<span class="math">80000 DA</span>) بعد التخفيض ثم الزيادة؟',
+                        type: 'select', options: [{v:'no', t:'لا، لا يبقى ثابتاً بل ينقص'}, {v:'yes', t:'نعم، يعود إلى 80000 DA'}],
+                        exact: ['no'], partial: [],
+                        h1: '💡 تلميح 1: التخفيض بـ 8% يعني الضرب في <span class="math">(1 - 0.08) = 0.92</span>، والزيادة بـ 8% تعني الضرب في <span class="math">1.08</span>.',
+                        h2: '💡 تلميح 2: بما أن <span class="math">0.92 × 1.08 = 0.9936 ≠ 1</span>، فإن السعر لا يعود كما كان.',
+                        sol: '<strong>لا يبقى ثابتاً</strong>، لأن الزيادة الثانية (8%) تُطبق على السعر المخفض وليس على السعر الأصلي.'
+                    },
+                    {
+                        qId: '19-2', pts: 3,
+                        text: 'السؤال (2): احسب السعر النهائي للجهاز بعد التخفيض والزيادة (بـ <span class="math">DA</span>).',
+                        type: 'text', sym: [],
+                        exact: ['79488', '79488DA'], partial: ['73600'],
+                        partMsg: '⚠️ <span class="math">73600 DA</span> هو السعر بعد التخفيض الأول فقط، اضربه الآن في <span class="math">1.08</span> لحساب الزيادة!',
+                        h1: '💡 تلميح 1: احسب <span class="math">80000 × (1 - 8/100) × (1 + 8/100)</span>.',
+                        h2: '💡 تلميح 2: اضرب <span class="math">80000 × 0.92 × 1.08</span>.',
+                        sol: 'السعر النهائي هو: <span class="math">80000 × 0.92 × 1.08 = 79488 DA</span>.'
+                    }
+                ]
+            },
+            {
+                id: 20, cat: 'sit', catName: 'وضعية إدماجية مقترحة 06',
+                title: 'التمرين 20 (وضعية): جملة معادلتين والإحصاء',
+                context: 'في قسم يتكون من <span class="math">31</span> تلميذاً بمتوسطة الشهيد محمد العربي بن مهيدي، تم رصد علامات فرض الرياضيات فكانت مرتبة في جدول تكرارات مجمعة صاعدة. كما أراد الأستاذ يوسفي السوفي تكريم التلاميذ فاشترى أقلاماً وكراريس وفق الجملة: <span class="math">x + y = 10</span> و <span class="math">5x + 3y = 38</span>.',
+                questions: [
+                    {
+                        qId: '20-1', pts: 2.5,
+                        text: 'السؤال (1): ما هي رتبة العلامة الوسيطية في قسم يضم <span class="math">31</span> تلميذاً؟',
+                        type: 'text', sym: [],
+                        exact: ['16'], partial: ['15.5'],
+                        partMsg: '⚠️ انتبه: عندما يكون التكرار الكلي فردياً (31)، نضيف 1 ثم نقسم على 2: <span class="math">(31 + 1) ÷ 2</span>!',
+                        h1: '💡 تلميح 1: العدد 31 فردي، رتبة الوسيط تُحسب بالقانون <span class="math">(N + 1) / 2</span>.',
+                        h2: '💡 تلميح 2: احسب <span class="math">(31 + 1) ÷ 2</span>.',
+                        sol: 'بما أن التكرار الكلي <span class="math">N = 31</span> عدد فردي، فإن رتبة الوسيط هي: <span class="math">(31 + 1) / 2 = 16</span> (القيمة الموافقة للتلميذ السادس عشر).'
+                    },
+                    {
+                        qId: '20-2', pts: 2.5,
+                        text: 'السؤال (2): حل جملة المعادلتين <span class="math">x + y = 10</span> و <span class="math">5x + 3y = 38</span> وأوجد الثنائية <span class="math">(x ; y)</span> (اكتب: x;y).',
+                        type: 'text', sym: [';'],
+                        exact: ['4;6', '(4;6)'], partial: ['6;4'],
+                        partMsg: '⚠️ عكست الثنائية! قيمة <span class="math">x = 4</span> وقيمة <span class="math">y = 6</span>.',
+                        h1: '💡 تلميح 1: من المعادلة الأولى <span class="math">y = 10 - x</span>، عوضها في المعادلة الثانية: <span class="math">5x + 3(10 - x) = 38</span>.',
+                        h2: '💡 تلميح 2: <span class="math">5x + 30 - 3x = 38 ⇒ 2x = 8 ⇒ x = 4</span>، ثم استنتج <span class="math">y = 10 - 4 = 6</span>.',
+                        sol: 'بالتعويض: <span class="math">y = 10 - x</span> في المعادلة الثانية نجد <span class="math">5x + 3(10 - x) = 38 ⇒ 2x = 8 ⇒ x = 4</span>، ومنه <span class="math">y = 6</span>. الثنائية هي <span class="math">(4 ; 6)</span>.'
+                    }
+                ]
+            }
+        ];
+
+        let totalScore = 0;
+        const earned = {};
+        const attempts = {};
+
+        function renderAll() {
+            const container = document.getElementById('exercisesContainer');
+            container.innerHTML = '';
+
+            exercisesData.forEach(ex => {
+                const card = document.createElement('div');
+                card.className = `ex-card cat-${ex.cat}`;
+                card.dataset.cat = ex.cat;
+
+                let qHtml = '';
+                ex.questions.forEach(q => {
+                    attempts[q.qId] = 3;
+                    earned[q.qId] = 0;
+
+                    let inputHtml = '';
+                    if (q.type === 'select') {
+                        let opts = `<option value="">-- اختر الإجابة --</option>`;
+                        q.options.forEach(o => { opts += `<option value="${o.v}">${o.t}</option>`; });
+                        inputHtml = `<select id="in-${q.qId}">${opts}</select>`;
+                    } else {
+                        inputHtml = `<input type="text" id="in-${q.qId}" placeholder="اكتب إجابتك هنا">`;
+                    }
+
+                    let symBtns = '';
+                    if (q.sym && q.sym.length > 0) {
+                        q.sym.forEach(s => {
+                            symBtns += `<button type="button" class="sym-btn" onclick="insertChar('in-${q.qId}', '${s}')">إدراج (${s})</button>`;
+                        });
+                    }
+
+                    qHtml += `
+                        <div class="q-block" id="block-${q.qId}">
+                            <div class="q-title">
+                                <span>${q.text}</span>
+                                <span class="att-badge" id="att-${q.qId}">المحاولات: 3 | (${q.pts} ن)</span>
+                            </div>
+                            <div class="input-row">
+                                ${inputHtml}
+                                ${symBtns}
+                                <button class="btn-verify" id="btn-${q.qId}" onclick="checkAnswer('${ex.id}', '${q.qId}')">تحقق من الإجابة</button>
+                            </div>
+                            <div class="fb-box" id="fb-${q.qId}"></div>
+                            <div class="sol-box" id="sol-${q.qId}">
+                                <h4>✔ الحل النموذجي المفصل والشرح:</h4>
+                                <div>${q.sol}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="ex-card-header">
+                        <h3>${ex.title}</h3>
+                        <span class="cat-tag">${ex.catName}</span>
+                    </div>
+                    <div class="ex-context">${ex.context}</div>
+                    ${qHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function insertChar(inputId, ch) {
+            const el = document.getElementById(inputId);
+            if (!el || el.disabled) return;
+            el.value += ch;
+            el.focus();
+        }
+
+        function normalize(str) {
+            if (!str) return '';
+            const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+            let s = str.toString().trim();
+            for (let i = 0; i < 10; i++) s = s.replace(new RegExp(ar[i], 'g'), i);
+            s = s.replace(/\s+/g, '')
+                 .replace(/،/g, ';')
+                 .replace(/و/g, ';')
+                 .replace(/جذر/g, '√')
+                 .replace(/على/g, '/');
+            return s;
+        }
+
+        function updateGlobalScore(qId, newPts, lockQuestion) {
+            const prev = earned[qId] || 0;
+            if (newPts > prev) {
+                totalScore += (newPts - prev);
+                earned[qId] = newPts;
+                document.getElementById('globalScore').innerText = `${totalScore} / 100`;
+            }
+            if (lockQuestion) {
+                document.getElementById(`block-${qId}`).classList.add('solved');
+                document.getElementById(`btn-${qId}`).disabled = true;
+                document.getElementById(`in-${qId}`).disabled = true;
+                document.getElementById(`sol-${qId}`).style.display = 'block';
+                if (typeof confetti === 'function') confetti({ particleCount: 45, spread: 60, origin: { y: 0.75 } });
+            }
+        }
+
+        function checkAnswer(exId, qId) {
+            const ex = exercisesData.find(e => e.id == exId);
+            const q = ex.questions.find(item => item.qId === qId);
+            const rawVal = document.getElementById(`in-${qId}`).value;
+            const val = (q.type === 'select') ? rawVal : normalize(rawVal);
+            const fb = document.getElementById(`fb-${qId}`);
+
+            if (!val) {
+                fb.className = 'fb-box hint';
+                fb.innerHTML = '⚠️ يرجى كتابة أو اختيار الإجابة أولاً قبل الضغط على الزر.';
+                return;
+            }
+
+            // التحقق من الإجابة الكاملة
+            const isExact = q.exact.some(ans => normalize(ans).toLowerCase() === val.toLowerCase());
+            if (isExact) {
+                fb.className = 'fb-box success';
+                fb.innerHTML = `🎉 أحسنت! إجابة صحيحة ودقيقة. حصلت على العلامة الكاملة (${q.pts} / ${q.pts}).`;
+                updateGlobalScore(qId, q.pts, true);
+                return;
+            }
+
+            // التحقق من الإجابة الجزئية (دون اختزال أو دون تبسيط)
+            const isPartial = q.partial && q.partial.some(ans => normalize(ans).toLowerCase() === val.toLowerCase());
+            if (isPartial) {
+                const halfPts = Math.round((q.pts / 2) * 100) / 100;
+                updateGlobalScore(qId, halfPts, false);
+                handleAttemptFail(q, halfPts, q.partMsg);
+                return;
+            }
+
+            // إجابة خاطئة
+            handleAttemptFail(q, 0, null);
+        }
+
+        function handleAttemptFail(q, partialAwarded, customMsg) {
+            const qId = q.qId;
+            attempts[qId]--;
+            const rem = attempts[qId];
+            document.getElementById(`att-${qId}`).innerText = `المحاولات: ${rem} | (${q.pts} ن)`;
+            const fb = document.getElementById(`fb-${qId}`);
+
+            if (rem > 0) {
+                const hintText = (rem === 2) ? q.h1 : q.h2;
+                fb.className = 'fb-box hint';
+                const prefix = customMsg
+                    ? `${customMsg} (تم منحك ${partialAwarded} ن مؤقتاً).<br>`
+                    : `❌ إجابة غير صحيحة، حاول مرة أخرى.<br>`;
+                fb.innerHTML = `${prefix}<strong>${hintText}</strong> (بقي لك ${rem} محاولة)`;
+            } else {
+                fb.className = 'fb-box fail';
+                fb.innerHTML = `⚠️ استنفدت محاولاتك الثلاث في هذا السؤال. إليك الحل النموذجي المفصل مع الشرح الكامل:`;
+                document.getElementById(`block-${qId}`).classList.add('failed');
+                document.getElementById(`btn-${qId}`).disabled = true;
+                document.getElementById(`in-${qId}`).disabled = true;
+                document.getElementById(`sol-${qId}`).style.display = 'block';
+            }
+        }
+
+        function filterEx(cat, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.ex-card').forEach(card => {
+                if (cat === 'all' || card.dataset.cat === cat) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        window.onload = renderAll;
+    </script>
+</body>
+</html>
